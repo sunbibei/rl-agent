@@ -1,0 +1,55 @@
+topic_name:
+  reset:          reset_command_topic
+  trial:          trial_command_topic
+  report_request: report_requests_topic
+  report_pub:     report_pub_topic
+
+controller_lib_path:
+  /home/silence/Workspace/Rl/baxter_gps/baxter_ws/devel/lib/librl_agent_controller_lib.so
+
+sensors:
+  lib_path:
+    /home/silence/Workspace/Rl/baxter_gps/baxter_ws/devel/lib/librl_agent_sensor_lib.so
+  types: # list the class name of all sensor
+    - ChainJointEncoder
+#    - JointEncoder
+#    - IMU
+#    - xxx
+  configures: # configure all of sensor options
+    ChainJointEncoder:
+      names: # Optional
+        - chain_joints_encoder
+      chain_joints_encoder:
+        chain: {root_link: leg_base, tip_link: foot}
+        joints:
+          - hip
+          - knee
+        # chain: {root_link: torso, tip_link: left_gripper_base}
+        # joints:
+        #   - left_s0
+        #   - left_s1
+        #   - left_e0
+        #   - left_e1
+        #   - left_w0
+        #   - left_w1
+        #   - left_w2
+        encoder_filter_params:
+          "0.29752 -106.5 -6447.3059 0.00029752 0.8935 -6.4473 1.4876e-07 0.00094675 0.99678; 0.70248 106.5 6447.3059"
+    
+    # JointEncoder:
+    #   names: # Optional
+    #     - joint_encoders
+    #   joint_encoders:
+    #     joints:
+    #       - left_s0
+    #       - left_s1
+    #       - left_e0
+    #       - left_e1
+    #       - left_w0
+    #       - left_w1
+    #       - left_w2
+#    IMU: # list the names of all imu
+#      - imu_1
+#      - imu_2
+#    xxx: # list the names of all xxx
+#      - xxx
