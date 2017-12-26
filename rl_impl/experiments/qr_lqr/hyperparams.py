@@ -47,7 +47,7 @@ ee_tgts = []
 reset_conditions = []
 
 common = {
-    'experiment_name': 'my_experiment' + '_' + \
+    'experiment_name': 'qr_lqr' + '_' + \
             datetime.strftime(datetime.now(), '%m-%d-%y_%H-%M'),
     'experiment_dir': EXP_DIR,
     'data_files_dir': EXP_DIR + 'data_files/',
@@ -126,7 +126,7 @@ agent = {
     # 'relax_command_topic': 'gps_controller_relax_command',
     'data_request_topic':  '/RLAgentBase/report_requests_topic',
     'sample_result_topic': '/RLAgentBase/report_pub_topic',
-    'dt': 0.05,
+    'dt': 0.5,
     'conditions': common['conditions'],
     'T': 21,
     'x0': x0s,
@@ -141,7 +141,7 @@ agent = {
 algorithm = {
     'type': AlgorithmTrajOpt,
     'conditions': common['conditions'],
-    'iterations': 10,
+    'iterations': 30,
 }
 
 algorithm['init_traj_distr'] = {
@@ -168,7 +168,7 @@ state_cost1 = {
     'data_types': {
         JOINT_ANGLES: {
             'target_state': tgt_state,  # Target state - must be set.
-            'wp': np.ones(SENSOR_DIMS[JOINT_ANGLES]),  # State weights - must be set.
+            'wp': 10*np.ones(SENSOR_DIMS[JOINT_ANGLES]),  # State weights - must be set.
         },
     },
 }
@@ -180,7 +180,7 @@ state_cost2 = {
     'data_types': {
         JOINT_ANGLES: {
             'target_state': tgt_state,  # Target state - must be set.
-            'wp': np.ones(SENSOR_DIMS[JOINT_ANGLES]),  # State weights - must be set.
+            'wp': 10*np.ones(SENSOR_DIMS[JOINT_ANGLES]),  # State weights - must be set.
         },
     },
     'wp_final_multiplier': 10.0,  # Weight multiplier on final timestep.
@@ -189,8 +189,8 @@ state_cost2 = {
 
 algorithm['cost'] = {
     'type': CostSum,
-    'costs': [torque_cost, state_cost1, state_cost2],
-    'weights': [1.0, 1.0, 1.0],
+    'costs': [state_cost1, state_cost2],
+    'weights': [1.0, 1.0],
 }
 
 algorithm['dynamics'] = {
