@@ -5,7 +5,7 @@ import numpy as np
 
 from gps.algorithm.cost.config import COST_STATE
 from gps.algorithm.cost.cost import Cost
-from gps.algorithm.cost.cost_utils import evall1l2term, get_ramp_multiplier
+from gps.algorithm.cost.cost_utils import evall1l2term, evallogl2term, get_ramp_multiplier
 
 
 class CostState(Cost):
@@ -46,9 +46,12 @@ class CostState(Cost):
             wp = wp * np.expand_dims(wpm, axis=-1)
             # Compute state penalty.
             dist = x - tgt
+            print x
+            #print tgt
 
             # Evaluate penalty term.
-            l, ls, lss = evall1l2term(
+            #l, ls, lss = evall1l2term(
+            l, ls, lss = evallogl2term(
                 wp, dist, np.tile(np.eye(dim_sensor), [T, 1, 1]),
                 np.zeros((T, dim_sensor, dim_sensor, dim_sensor)),
                 self._hyperparams['l1'], self._hyperparams['l2'],

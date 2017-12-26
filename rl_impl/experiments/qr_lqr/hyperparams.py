@@ -17,7 +17,7 @@ from gps.algorithm.cost.cost_utils import RAMP_LINEAR, RAMP_FINAL_ONLY
 from gps.algorithm.dynamics.dynamics_lr_prior import DynamicsLRPrior
 from gps.algorithm.dynamics.dynamics_prior_gmm import DynamicsPriorGMM
 from gps.algorithm.traj_opt.traj_opt_lqr_python import TrajOptLQRPython
-from gps.algorithm.policy.lin_gauss_init import init_lqr
+from gps.algorithm.policy.lin_gauss_init import init_lqr, init_pd
 from gps.gui.target_setup_gui import load_pose_from_npz
 from gps.proto.gps_pb2 import JOINT_ANGLES, JOINT_VELOCITIES, \
         END_EFFECTOR_POINTS, END_EFFECTOR_POINT_VELOCITIES, ACTION, \
@@ -146,12 +146,12 @@ algorithm = {
 
 algorithm['init_traj_distr'] = {
     'type': init_lqr,
-    'init_gains':  1.0 / PR2_GAINS,
-    'init_acc': np.zeros(SENSOR_DIMS[ACTION]),
+    #'init_gains':  1.0 / PR2_GAINS,
+    #'init_acc': np.zeros(SENSOR_DIMS[ACTION]),
     'init_var': 1.0,
     'stiffness': 0.5,
     'stiffness_vel': 0.25,
-    'final_weight': 50,
+    # 'final_weight': 50,
     'dt': agent['dt'],
     'T': agent['T'],
 }
@@ -168,9 +168,12 @@ state_cost1 = {
     'data_types': {
         JOINT_ANGLES: {
             'target_state': tgt_state,  # Target state - must be set.
-            'wp': 10*np.ones(SENSOR_DIMS[JOINT_ANGLES]),  # State weights - must be set.
+            'wp': np.ones(SENSOR_DIMS[JOINT_ANGLES]),  # State weights - must be set.
         },
     },
+    'l1': 1.0,
+    'l2': 2.0,
+    'alpha': 1e-4,
 }
 
 state_cost2 = {
@@ -180,10 +183,10 @@ state_cost2 = {
     'data_types': {
         JOINT_ANGLES: {
             'target_state': tgt_state,  # Target state - must be set.
-            'wp': 10*np.ones(SENSOR_DIMS[JOINT_ANGLES]),  # State weights - must be set.
+            'wp': np.ones(SENSOR_DIMS[JOINT_ANGLES]),  # State weights - must be set.
         },
     },
-    'wp_final_multiplier': 10.0,  # Weight multiplier on final timestep.
+    'wp_final_multiplier': 1.0,  # Weight multiplier on final timestep.
     'ramp_option': RAMP_FINAL_ONLY,
 }
 
