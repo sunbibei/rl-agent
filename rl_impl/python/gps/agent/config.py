@@ -26,7 +26,7 @@ try:
 
     import roslib
 
-    roslib.load_manifest('gps_agent_pkg')
+    roslib.load_manifest('rl_msgs')
 
     # AgentROS
     AGENT_ROS = {

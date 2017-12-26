@@ -37,7 +37,7 @@ SENSOR_DIMS = {
     ACTION: 3,
 }
 
-PR2_GAINS = np.array([3.09, 1.08, 0.393])
+PR2_GAINS = np.array([0.001, 0.00108, 0.00393])
 
 BASE_DIR = '/'.join(str.split(gps_filepath, '/')[:-2])
 EXP_DIR = BASE_DIR + '/../experiments/qr_lqr/'
