@@ -9,7 +9,7 @@
 #define INCLUDE_RL_AGENT_CONTROLLER_POSITION_CONTROLLER_H_
 
 #include "controller.h"
-#include <toolbox/timer.h>
+#include <toolbox/time_control.h>
 
 namespace rl_agent {
 
@@ -44,7 +44,7 @@ private:
   const double EPSILON_POS_;
   const double EPSILON_VEL_;
 
-  middleware::Timer timer_;
+  TimeControl timer_;
 };
 
 } /* namespace rl_agent */

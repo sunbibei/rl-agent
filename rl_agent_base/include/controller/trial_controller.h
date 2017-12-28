@@ -7,7 +7,7 @@ a subclass.
 
 // Superclass.
 #include "controller.h"
-#include <toolbox/timer.h>
+#include <toolbox/time_control.h>
 
 namespace rl_agent {
 
@@ -44,7 +44,7 @@ protected:
 
   bool is_configured_;
 
-  middleware::Timer timer_;
+  TimeControl timer_;
   // the tmp duration
   int64_t   tmp_duration_;
   // Store the controller step duration (in ms)
