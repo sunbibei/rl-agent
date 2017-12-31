@@ -69,7 +69,7 @@ void PositionController::configureSample(Sample& sample) {
 bool PositionController::control(const Eigen::VectorXd& X,
     Eigen::VectorXd& U) {
 
-  if (timer_.is_running()) {
+  if (timer_.running()) {
     timer_.start();
     return false;
   }

@@ -25,7 +25,7 @@ TrialController::~TrialController() { };
 bool TrialController::control(const Eigen::VectorXd& state,
     Eigen::VectorXd &action) {
   if (!is_configured_)      return false;
-  if (!timer_.is_running()) timer_.start();
+  if (!timer_.running()) timer_.start();
 
   tmp_duration_ += timer_.dt();
   if ((isFinished()) || (tmp_duration_ < step_duration_)) return false;
